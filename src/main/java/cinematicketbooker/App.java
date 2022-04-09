@@ -3,8 +3,8 @@ package cinematicketbooker;
 import java.util.UUID;
 
 public class App {
-    private static final int BOOKING_COUNT = 5;
-    //private static final int BOOKING_COUNT = 1000;
+
+    private static final int BOOKING_COUNT = 1000;
 
     public static void main(String[] args) {
         System.out.println("Starting Cinema Ticket Booker App...");
