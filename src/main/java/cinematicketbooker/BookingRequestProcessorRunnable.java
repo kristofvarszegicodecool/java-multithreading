@@ -9,7 +9,8 @@ public class BookingRequestProcessorRunnable implements Runnable {
     }
 
     public BookingRequestProcessorRunnable(BookingRequest bookingRequest, ReservationStore reservationStore) {
-        // TODO
+        this.bookingRequest = bookingRequest;
+        this.reservationStore = reservationStore;
     }
 
     public void processBookingRequest() {
@@ -19,10 +20,14 @@ public class BookingRequestProcessorRunnable implements Runnable {
         reserveAtTargetCinema(bookingRequest);
 
         // Create the reservation data including the printable ticket
-        // TODO
+        ReservationData reservationData = new ReservationData(bookingRequest);
 
         // Store the printable ticket in memory just in case (e.g. we need to repeat the email)
-        // TODO
+
+        reservationStore.add(reservationData);
+        //synchronized (reservationStore) {
+        //    reservationStore.add(reservationData);
+        //}
 
         // Send the printable tickets in email to the booker
         sendPrintableTicketInEmail(reservationData);

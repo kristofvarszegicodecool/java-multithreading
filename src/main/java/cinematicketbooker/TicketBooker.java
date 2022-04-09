@@ -1,5 +1,6 @@
 package cinematicketbooker;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TicketBooker {
@@ -8,15 +9,24 @@ public class TicketBooker {
     private List<Thread> threads;
 
     public TicketBooker() {
-        // TODO
+        reservationStore = new ReservationStore();
+        threads = new ArrayList<>();
     }
 
     public void process(BookingRequest cinemaBookingRequest) {
-        // TODO, Use the runnable class
+        Thread thread = new Thread(new BookingRequestProcessorRunnable(cinemaBookingRequest, reservationStore));
+        thread.start();
+        threads.add(thread);
     }
 
     public void waitUntilAllRequestsProcessed() {
-        // TODO
+        for (final Thread thread : threads) {
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void printReservations() {
